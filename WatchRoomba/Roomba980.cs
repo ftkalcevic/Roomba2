@@ -6,6 +6,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Configuration;
+using System.Diagnostics;
 
 //var requestOptions = {
 //    -'method': 'POST',
@@ -26,6 +27,8 @@ namespace WatchRoomba
 {
     public class Roomba
     {
+        static TraceSource ts = new TraceSource("RoombaTrace");
+
         class Request
         {
             public string @do;
@@ -182,12 +185,12 @@ namespace WatchRoomba
 
                 //MissionResponseOK output = await response.Content.ReadAsAsync<MissionResponseOK>();
                 var s = await response.Content.ReadAsStringAsync();
-                System.Diagnostics.Debug.Print(s);
+                ts.TraceInformation(s);
                 ret = JsonConvert.DeserializeObject<T>(s);
             }
             catch (Exception e)
             {
-                System.Diagnostics.Debug.Print(e.ToString());
+                ts.TraceEvent(TraceEventType.Error,0,e.ToString());
             }
             return ret;
         }
@@ -206,7 +209,7 @@ namespace WatchRoomba
             }
             catch (Exception e)
             {
-                System.Diagnostics.Debug.Print(e.ToString());
+                ts.TraceEvent(TraceEventType.Error, 0, e.ToString());
             }
             return bRet;
         }

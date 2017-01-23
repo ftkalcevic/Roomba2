@@ -7,11 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace WatchRoomba
 {
     public partial class Form1 : Form
     {
+        static TraceSource ts = new TraceSource("RoombaTrace");
         private const int PollInterval = 1000;
         private Timer t;
         private Roomba r;
@@ -24,6 +26,8 @@ namespace WatchRoomba
         public Form1()
         {
             InitializeComponent();
+
+            ts.TraceInformation("WatchRoomba starting");
 
             if (r == null)
                 r = new Roomba();
@@ -66,7 +70,7 @@ namespace WatchRoomba
             {
                 Roomba.MissionResponse resp = respOK.ok;
 
-                System.Diagnostics.Debug.Print("{0} ({1},{2})@{3} {4}", resp.phase, resp.pos.point.x, resp.pos.point.y, resp.pos.theta, resp.batPct);
+                ts.TraceInformation("{0} ({1},{2})@{3} {4}", resp.phase, resp.pos.point.x, resp.pos.point.y, resp.pos.theta, resp.batPct);
                 resp.pos.point.x = -resp.pos.point.x;
 
                 if (last_phase != resp.phase)
