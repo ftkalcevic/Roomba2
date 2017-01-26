@@ -1,11 +1,20 @@
 ﻿
-<span *ngIf="details">MissionId: {{details.MissionId}} Start: {{details.StartTime}} End: {{details.EndTime}} </span>
+<span *ngIf="details">Start: {{details.StartTime|date:'shortTime'}} End: {{details.EndTime|date:'shortTime'}} </span>
 <span>
     <input type="checkbox" #thickline [checked]="bThickLine" (change)="onLineThicknessChanged(thickline.checked);" />Thick Line
     <input type="checkbox" #accumulate [checked]="bAccumulatePath" (change)="onAccumulateChanged(accumulate.checked);" />Accumulate
 </span>
-<canvas id="canvasMap" 
-        width="2170"
-        height="1357"
-        style="width:100%; height:100%; background-image:url('/img/floorplan.png'); background-size:cover;" >
-</canvas>
+<span>
+    <input style="width:100%; padding-top:.5em; padding-bottom:.5em;" 
+           type="range" 
+           id="points"
+           name="points"
+           #points 
+           min="0" 
+           max="{{numberOfPoints}}" 
+           (change)="onRangeChanged(points.value);">
+    <canvas id="canvasMap"
+            width="2170"
+            height="1357"
+            style="width:100%; height:100%; background-image:url('/img/floorplan.png'); background-size:cover;"></canvas>
+</span>

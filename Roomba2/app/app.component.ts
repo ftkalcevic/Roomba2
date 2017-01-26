@@ -75,11 +75,11 @@ export class AppComponent implements OnInit {
     roombaStatus_LastUpdate :string;
     roombaStatus_RoombaTime :string;
     roombaStatus_NextMission: string;
-    nextMissionCountDown: Date;
+    nextMissionCountDown: number;
+    lastNextMissionCountDown: number;
     roombaMissions: Mission[];
     selectedMission: Mission;
     errorMessage: string;
-    name: string;
 
     constructor(private roombaService: RoombaService) {
         this.roombaStatus = new CurrentStatus();
@@ -88,12 +88,14 @@ export class AppComponent implements OnInit {
         this.roombaStatus_NextMission= "";
         this.roombaMissions = new Array<Mission>();
         this.errorMessage = "";
-        this.name = 'Angular';
     }
 
-    onSelect(mission: Mission)
+    onSelect(index: number)
     {
-        this.selectedMission = mission;
+        if ( index >= 0)
+            this.selectedMission = this.roombaMissions[index];
+        else
+            this.selectedMission = null;
     }
 
     locale(): string {
@@ -104,31 +106,17 @@ export class AppComponent implements OnInit {
     updateNextMissionCountdown() {
         if (this.nextMissionCountDown)
         {
-            let days: number = this.nextMissionCountDown.getDay();
-            let hours: number = this.nextMissionCountDown.getHours();
-            let mins: number = this.nextMissionCountDown.getMinutes();
-            let secs: number = this.nextMissionCountDown.getSeconds();
-
-            if (!(days == 0 && hours == 0 && mins == 0 && secs == 0)) {
-                secs--;
-                if (secs < 0) {
-                    secs = 0;
-                    mins--;
-                    if (mins < 0) {
-                        mins = 0;
-                        hours--;
-                        if (hours < 0) {
-                            hours = 0;
-                            days--;
-                        }
-                    }
-                }
-            }
-            this.nextMissionCountDown = new Date(0, 0, days, hours, mins, secs, 0);
-            if (days == 0 && hours == 0 && mins == 0 && secs == 0) {
+            if (this.nextMissionCountDown <= 0) {
                 this.roombaStatus_NextMission = 'Now!'
             }
             else {
+                this.nextMissionCountDown--;
+
+                let days: number = Math.floor(this.nextMissionCountDown / (24 * 60 * 60));
+                let hours: number = Math.floor((this.nextMissionCountDown / (60 * 60)) % 24);
+                let mins: number = Math.floor((this.nextMissionCountDown / 60) % 60);
+                let secs: number = Math.floor(this.nextMissionCountDown % 60);
+
                 let s: string = "";
                 if (days > 0)
                     s += days.toString() + "d ";
@@ -148,7 +136,8 @@ export class AppComponent implements OnInit {
         if (status) {
             this.roombaStatus = status;
 
-            this.nextMissionCountDown = new Date(status.NextMission);
+            if (!this.lastNextMissionCountDown || this.lastNextMissionCountDown != this.nextMissionCountDown)
+                this.nextMissionCountDown = status.NextMission;
 
             // Date pipes not working on IE
             this.roombaStatus_LastUpdate = new Date(status.LastUpdate).toLocaleDateString(this.locale(), {
@@ -187,7 +176,7 @@ export class AppComponent implements OnInit {
 
         this.roombaService.getMissions()
             .subscribe(missions => {
-                    this.roombaMissions = missions;
+                this.roombaMissions = missions;
             },
             error => this.errorMessage = <any>error);
     }
