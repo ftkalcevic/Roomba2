@@ -89,7 +89,7 @@ namespace WatchRoomba
             }
         }
 
-        internal static void UpdateCurrentStats(DateTime timestamp, string status, DateTime? nextMission)
+        internal static void UpdateCurrentStats(DateTime timestamp, string status, int? nextMission, DateTime? roombaTime, int flags, int batteryPercentage, int error, int notReady)
         {
             try
             {
@@ -101,8 +101,14 @@ namespace WatchRoomba
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.Add("@LastUpdate", SqlDbType.DateTime).Value = timestamp;
                         cmd.Parameters.Add("@Status", SqlDbType.VarChar,100).Value = status;
+                        cmd.Parameters.Add("@Flags", SqlDbType.Int).Value = flags;
+                        cmd.Parameters.Add("@BatteryPercentage", SqlDbType.Int).Value = batteryPercentage;
+                        cmd.Parameters.Add("@Error", SqlDbType.Int).Value = error;
+                        cmd.Parameters.Add("@NotReady", SqlDbType.Int).Value = notReady;
                         if ( nextMission != null )
-                            cmd.Parameters.Add("@NextMission", SqlDbType.DateTime).Value = nextMission;
+                            cmd.Parameters.Add("@NextMission", SqlDbType.Int).Value = nextMission;
+                        if (roombaTime != null)
+                            cmd.Parameters.Add("@RoombaTime", SqlDbType.DateTime).Value = roombaTime;
 
                         cmd.ExecuteNonQuery();
                     }

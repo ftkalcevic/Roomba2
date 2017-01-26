@@ -92,8 +92,12 @@ namespace WatchRoomba
 
                 if ( MissionTick % (10*60) == 10) // Every 10 minutes
                 {
-                    TimeSpan tsNextMission = await GetNextMission();
-                    if (tsNextMission.Seconds != 0)
+                    Roomba.TimeResponseOK time = await r.GetTime();
+                    Roomba.WeekResponseOK week = await r.GetWeek();
+
+                    DateTime dtRoombaTime = new DateTime(2000, 1, 1, time.ok.h, time.ok.m, 0);
+                    TimeSpan tsNextMission = GetNextMission(time,week);
+                    if (tsNextMission.TotalSeconds != 0)
                     {
                         if (tsNextMission.Days == 0)
                             if (tsNextMission.Hours == 0)
@@ -103,10 +107,11 @@ namespace WatchRoomba
                         else
                             lblNextMission.Text = tsNextMission.ToString(@"d\ \d\a\y\s\ h\ \h\o\u\r\s\ m\ \m\i\n");
                     }
-                    RoombaDB.UpdateCurrentStats(DateTime.Now, resp.phase, DateTime.Now + tsNextMission);
+                    lblRoombaTime.Text = time.ok.d + " " + time.ok.h.ToString() + ":" + time.ok.m.ToString("00");
+                    RoombaDB.UpdateCurrentStats(DateTime.Now, resp.phase, (int)tsNextMission.TotalSeconds, dtRoombaTime, resp.flags, resp.batPct, resp.error, resp.notReady);
                 }
                 else
-                    RoombaDB.UpdateCurrentStats(DateTime.Now, resp.phase, null);
+                    RoombaDB.UpdateCurrentStats(DateTime.Now, resp.phase, null, null, resp.flags, resp.batPct, resp.error, resp.notReady);
 
                 UpdateStats(resp);
             }
@@ -140,12 +145,9 @@ namespace WatchRoomba
             lblSqft.Text = resp.sqft.ToString();
         }
 
-        private async Task<TimeSpan> GetNextMission()
+        private TimeSpan GetNextMission(Roomba.TimeResponseOK time, Roomba.WeekResponseOK week )
         {
             TimeSpan t = TimeSpan.Zero;
-
-            Roomba.TimeResponseOK time = await r.GetTime();
-            Roomba.WeekResponseOK week = await r.GetWeek();
 
             if (time != null && week != null)
             {
@@ -227,7 +229,8 @@ namespace WatchRoomba
 
         private void panelMap_Resize(object sender, EventArgs e)
         {
-            map.Render(panelMap);
+            if ( map != null )
+                map.Render(panelMap);
         }
     }
 }

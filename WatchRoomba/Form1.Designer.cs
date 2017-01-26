@@ -57,6 +57,8 @@
             this.lblCycle = new System.Windows.Forms.Label();
             this.lblNextMission = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
+            this.lblRoombaTime = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // btnWatch
@@ -125,9 +127,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panelMap.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panelMap.Location = new System.Drawing.Point(12, 200);
+            this.panelMap.Location = new System.Drawing.Point(12, 70);
             this.panelMap.Name = "panelMap";
-            this.panelMap.Size = new System.Drawing.Size(782, 362);
+            this.panelMap.Size = new System.Drawing.Size(771, 414);
             this.panelMap.TabIndex = 6;
             this.panelMap.Resize += new System.EventHandler(this.panelMap_Resize);
             // 
@@ -215,7 +217,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(606, 9);
+            this.label10.Location = new System.Drawing.Point(655, 9);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(27, 13);
             this.label10.TabIndex = 16;
@@ -226,90 +228,80 @@
             this.lblPhase.AutoSize = true;
             this.lblPhase.Location = new System.Drawing.Point(371, 9);
             this.lblPhase.Name = "lblPhase";
-            this.lblPhase.Size = new System.Drawing.Size(40, 13);
+            this.lblPhase.Size = new System.Drawing.Size(0, 13);
             this.lblPhase.TabIndex = 17;
-            this.lblPhase.Text = "charge";
             // 
             // lblSqft
             // 
             this.lblSqft.AutoSize = true;
-            this.lblSqft.Location = new System.Drawing.Point(639, 9);
+            this.lblSqft.Location = new System.Drawing.Point(682, 9);
             this.lblSqft.Name = "lblSqft";
-            this.lblSqft.Size = new System.Drawing.Size(13, 13);
+            this.lblSqft.Size = new System.Drawing.Size(0, 13);
             this.lblSqft.TabIndex = 27;
-            this.lblSqft.Text = "9";
             // 
             // lblMssnM
             // 
             this.lblMssnM.AutoSize = true;
             this.lblMssnM.Location = new System.Drawing.Point(567, 41);
             this.lblMssnM.Name = "lblMssnM";
-            this.lblMssnM.Size = new System.Drawing.Size(13, 13);
+            this.lblMssnM.Size = new System.Drawing.Size(0, 13);
             this.lblMssnM.TabIndex = 26;
-            this.lblMssnM.Text = "1";
             // 
             // lblNotReady
             // 
             this.lblNotReady.AutoSize = true;
             this.lblNotReady.Location = new System.Drawing.Point(567, 25);
             this.lblNotReady.Name = "lblNotReady";
-            this.lblNotReady.Size = new System.Drawing.Size(13, 13);
+            this.lblNotReady.Size = new System.Drawing.Size(0, 13);
             this.lblNotReady.TabIndex = 25;
-            this.lblNotReady.Text = "0";
             // 
             // lblError
             // 
             this.lblError.AutoSize = true;
             this.lblError.Location = new System.Drawing.Point(567, 9);
             this.lblError.Name = "lblError";
-            this.lblError.Size = new System.Drawing.Size(13, 13);
+            this.lblError.Size = new System.Drawing.Size(0, 13);
             this.lblError.TabIndex = 24;
-            this.lblError.Text = "0";
             // 
             // lblRechrgM
             // 
             this.lblRechrgM.AutoSize = true;
             this.lblRechrgM.Location = new System.Drawing.Point(491, 41);
             this.lblRechrgM.Name = "lblRechrgM";
-            this.lblRechrgM.Size = new System.Drawing.Size(13, 13);
+            this.lblRechrgM.Size = new System.Drawing.Size(0, 13);
             this.lblRechrgM.TabIndex = 23;
-            this.lblRechrgM.Text = "0";
             // 
             // lblExpireM
             // 
             this.lblExpireM.AutoSize = true;
             this.lblExpireM.Location = new System.Drawing.Point(491, 25);
             this.lblExpireM.Name = "lblExpireM";
-            this.lblExpireM.Size = new System.Drawing.Size(13, 13);
+            this.lblExpireM.Size = new System.Drawing.Size(0, 13);
             this.lblExpireM.TabIndex = 22;
-            this.lblExpireM.Text = "0";
             // 
             // lblBattery
             // 
             this.lblBattery.AutoSize = true;
             this.lblBattery.Location = new System.Drawing.Point(491, 9);
             this.lblBattery.Name = "lblBattery";
-            this.lblBattery.Size = new System.Drawing.Size(19, 13);
+            this.lblBattery.Size = new System.Drawing.Size(0, 13);
             this.lblBattery.TabIndex = 21;
-            this.lblBattery.Text = "97";
             // 
             // lblPosition
             // 
             this.lblPosition.AutoSize = true;
             this.lblPosition.Location = new System.Drawing.Point(371, 41);
             this.lblPosition.Name = "lblPosition";
-            this.lblPosition.Size = new System.Drawing.Size(54, 13);
+            this.lblPosition.Size = new System.Drawing.Size(0, 13);
             this.lblPosition.TabIndex = 20;
-            this.lblPosition.Text = "-17,0/179";
             // 
             // lblCycle
             // 
             this.lblCycle.AutoSize = true;
             this.lblCycle.Location = new System.Drawing.Point(371, 25);
             this.lblCycle.Name = "lblCycle";
-            this.lblCycle.Size = new System.Drawing.Size(31, 13);
+            this.lblCycle.Size = new System.Drawing.Size(0, 13);
             this.lblCycle.TabIndex = 19;
-            this.lblCycle.Text = "none";
             // 
             // lblNextMission
             // 
@@ -322,17 +314,36 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(606, 41);
+            this.label12.Location = new System.Drawing.Point(612, 41);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(70, 13);
             this.label12.TabIndex = 28;
             this.label12.Text = "Next Mission:";
             // 
+            // lblRoombaTime
+            // 
+            this.lblRoombaTime.AutoSize = true;
+            this.lblRoombaTime.Location = new System.Drawing.Point(682, 25);
+            this.lblRoombaTime.Name = "lblRoombaTime";
+            this.lblRoombaTime.Size = new System.Drawing.Size(0, 13);
+            this.lblRoombaTime.TabIndex = 31;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(606, 25);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(76, 13);
+            this.label13.TabIndex = 30;
+            this.label13.Text = "Roomba Time:";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(806, 574);
+            this.ClientSize = new System.Drawing.Size(795, 496);
+            this.Controls.Add(this.lblRoombaTime);
+            this.Controls.Add(this.label13);
             this.Controls.Add(this.lblNextMission);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.lblSqft);
@@ -401,6 +412,8 @@
         private System.Windows.Forms.Label lblCycle;
         private System.Windows.Forms.Label lblNextMission;
         private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label lblRoombaTime;
+        private System.Windows.Forms.Label label13;
     }
 }
 
