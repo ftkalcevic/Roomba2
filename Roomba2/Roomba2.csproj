@@ -107,6 +107,8 @@
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\CurrentStatusController.cs" />
+    <Compile Include="Controllers\LiveMissionDetailsController.cs" />
+    <Compile Include="Models\LiveMissionDetails.cs" />
     <Compile Include="Controllers\MissionDetailsController.cs" />
     <Compile Include="Controllers\MissionsController.cs" />
     <Compile Include="Global.asax.cs">
@@ -138,6 +140,7 @@
     <TypeScriptCompile Include="app\CurrentStatus.ts" />
     <TypeScriptCompile Include="app\main.ts" />
     <Content Include="app\roomba-map.component.html" />
+    <TypeScriptCompile Include="app\LiveMissionDetails.ts" />
     <TypeScriptCompile Include="app\roomba-map.component.ts" />
     <TypeScriptCompile Include="app\MissionDetails.ts" />
     <TypeScriptCompile Include="app\Mission.ts" />
