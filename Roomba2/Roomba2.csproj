@@ -96,8 +96,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="app\app.component.html" />
+    <TypeScriptCompile Include="app\app.component.html" />
     <Content Include="Global.asax" />
+    <Content Include="img\floorplan.png" />
     <Content Include="index.html" />
     <Content Include="Roomba.htm" />
     <Content Include="styles.css" />
@@ -136,8 +137,11 @@
     <TypeScriptCompile Include="app\app.module.ts" />
     <TypeScriptCompile Include="app\CurrentStatus.ts" />
     <TypeScriptCompile Include="app\main.ts" />
+    <Content Include="app\roomba-map.component.html" />
+    <TypeScriptCompile Include="app\roomba-map.component.ts" />
     <TypeScriptCompile Include="app\MissionDetails.ts" />
     <TypeScriptCompile Include="app\Mission.ts" />
+    <TypeScriptCompile Include="app\roomba-status.component.ts" />
     <TypeScriptCompile Include="app\roomba.service.ts" />
     <TypeScriptCompile Include="app\rxjs-operators.ts" />
   </ItemGroup>

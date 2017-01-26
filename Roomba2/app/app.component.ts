@@ -7,31 +7,73 @@ import './rxjs-operators';
 import { OnInit } from '@angular/core';
 
 @Component({
-  selector: 'my-app',
-  template: `
-<h1>Roomba Bob</h1>
-<table>
-<tr><th>Last Update</th><th>Status</th><th>Next Mission</th><th>Roomba Time</th></tr>
-<tr><td>{{roombaStatus.LastUpdate}}</td><td>{{roombaStatus.Status}}</td><td>{{roombaStatus.NextMission}}</td><td>{{roombaStatus.RoombaTime}}</td></tr>
-</table>
-
-<span>Number of Missions: {{roombaMissions.length}}</span>
-<li *ngFor="let mission of roombaMissions">
-  <span>{{mission.MissionId}} {{mission.StartTime}}</span>
-</li>
-<span>MissionId: {{details.MissionId}} Start: {{details.StartTime}} End: {{details.EndTime}} </span>
-<li *ngFor="let x of details.x; let i = index">
-  <span>{{details.x[i]}},{{details.y[i]}}:{{details.theta[i]}} {{details.battery[i]}}</span>
-</li>
-
-<span>{{errorMessage}}</span>
-`,
-  providers: [RoombaService]
+    selector: 'my-app',
+    styles: [`
+  .selected {
+    background-color: #CFD8DC !important;
+    color: white;
+  }
+  .missions {
+    margin: 0 0 2em 0;
+    list-style-type: none;
+    padding: 0;
+    width: 15em;
+  }
+  .missions th {
+    cursor: pointer;
+    position: relative;
+    left: 0;
+    background-color: #EEE;
+    margin: .5em;
+    padding: .3em 0;
+    height: 1.6em;
+    border-radius: 4px;
+  }
+  .missions li {
+    cursor: pointer;
+    position: relative;
+    left: 0;
+    background-color: #EEE;
+    margin: .5em;
+    padding: .3em 0;
+    height: 1.6em;
+    border-radius: 4px;
+  }
+  .missions li.selected:hover {
+    background-color: #BBD8DC !important;
+    color: white;
+  }
+  .missions li:hover {
+    color: #607D8B;
+    background-color: #DDD;
+    left: .1em;
+  }
+  .missions .text {
+    position: relative;
+    top: -3px;
+  }
+  .missions .mission {
+    display: inline-block;
+    font-size: small;
+    color: white;
+    padding: 0.8em 0.7em 0 0.7em;
+    background-color: #607D8B;
+    line-height: 1em;
+    position: relative;
+    left: -1px;
+    top: -4px;
+    height: 1.8em;
+    margin-right: .8em;
+    border-radius: 4px 0 0 4px;
+  }
+`],
+    templateUrl: 'app/app.component.html',
+    providers: [RoombaService]
 })
 export class AppComponent implements OnInit {
     roombaStatus: CurrentStatus;
     roombaMissions: Mission[];
-    details: MissionDetails;
+    selectedMission: Mission;
     errorMessage: string;
     name: string;
 
@@ -39,46 +81,47 @@ export class AppComponent implements OnInit {
                 private roombaService: RoombaService) {
         this.roombaStatus = new CurrentStatus();
         this.roombaMissions = new Array<Mission>();
-        this.details = new MissionDetails();
         this.errorMessage = "";
         this.name = 'Angular';
     }
 
-    UpdateMissions(missions:Mission[])
+    onSelect(mission: Mission)
     {
-        this.roombaMissions = missions;
-
-        this.roombaService.getMissionDetails(missions[0].MissionId)
-            .subscribe(mission => {
-                this.zone.run(() => {
-                    this.details = mission;
-                })
-            },
-            error => this.errorMessage = <any>error);
+        this.selectedMission = mission;
     }
-    ngOnInit()
-    { 
+    updateStatus(status: CurrentStatus, error?: string) {
+        if (status)
+            this.roombaStatus = status;
+        else if (error)
+            this.errorMessage = error;
+
+        //setTimeout(this.refreshCurrentStatusTimeout, 10000);
+    }
+    refreshCurrentStatusTimeout()
+    {
         this.roombaService.getCurrentStatus()
             .subscribe(status => {
                 this.zone.run(() => {
-                    this.roombaStatus = status;
+                    this.updateStatus(status);
                 })
             },
-            error => this.errorMessage = <any>error);
-        //this.roombaService.getMissions()
-        //    .subscribe(missions => {
-        //        this.zone.run(() => {
-        //            this.roombaMissons = missions;
-        //        })
-        //    },
-        //    error => this.errorMessage = <any>error);
+            error => {
+                this.zone.run(() => {
+                    this.updateStatus(null,error);
+                })
+            });
+    }
+
+    ngOnInit()
+    { 
+        this.refreshCurrentStatusTimeout();
+
         this.roombaService.getMissions()
             .subscribe(missions => {
                 this.zone.run(() => {
-                    this.UpdateMissions(missions);
+                    this.roombaMissions = missions;
                 })
             },
             error => this.errorMessage = <any>error);
-
     }
 }
