@@ -31,6 +31,8 @@ namespace WatchRoomba
         private void Init()
         {
             Positions = null;
+            minx = miny = -10;
+            maxx = maxy = 10;
         }
 
         public void Update(int tick, int x, int y, int theta)
@@ -38,8 +40,6 @@ namespace WatchRoomba
             if (Positions==null)
             {
                 Positions = new List<Position>(INITIAL_CAPACITY);
-                minx = maxx = x;
-                miny = maxy = y;
             }
             else
             {
@@ -56,7 +56,7 @@ namespace WatchRoomba
             Positions.Add(new Position() { x = x, y = y, theta = theta });
         }
 
-        private void Scale(double min1, double max1, double min2, double max2, out double offset, out double scale)
+        private void Scale(float min1, float max1, float min2, float max2, out float offset, out float scale)
         {
             if (max1 == min1)
                 scale = 1;
@@ -70,8 +70,8 @@ namespace WatchRoomba
             
             g.Clear(Color.Wheat);
 
-            double offsetx, offsety;
-            double scalex, scaley;
+            float offsetx, offsety;
+            float scalex, scaley;
 
             Scale(minx, maxx, 0, p.Width, out offsetx, out scalex);
             Scale(miny, maxy, 0, p.Height, out offsety, out scaley);
@@ -80,6 +80,9 @@ namespace WatchRoomba
                 scalex = scaley;
             else
                 scaley = scalex;
+
+            RectangleF home = new RectangleF((-10 - offsetx )* scalex, (-10 - offsety)* scaley, 20 * scalex, 20 * scaley);
+            g.FillEllipse(Brushes.Red, home);
 
             float x1 = (float)((Positions[0].x - offsetx) * scalex);
             float y1 = (float)((Positions[0].y - offsety ) * scaley);

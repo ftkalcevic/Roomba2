@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 using System.Data.SqlClient;
 using System.Data;
 using System.Diagnostics;
+using System.Configuration;
 
 namespace WatchRoomba
 {
     class RoombaDB
     {
-        static string ConnectionString = @"Data Source = Server\SQLEXPRESS;Initial Catalog = Roomba2; Integrated Security = True;";
+        static string ConnectionString = ConfigurationManager.ConnectionStrings["RoombaDB"].ConnectionString;
         static TraceSource ts = new TraceSource("RoombaTrace");
 
         public static int NewMission()

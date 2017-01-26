@@ -129,6 +129,7 @@
             this.panelMap.Name = "panelMap";
             this.panelMap.Size = new System.Drawing.Size(782, 362);
             this.panelMap.TabIndex = 6;
+            this.panelMap.Resize += new System.EventHandler(this.panelMap_Resize);
             // 
             // label1
             // 

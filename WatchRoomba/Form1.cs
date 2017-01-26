@@ -224,5 +224,10 @@ namespace WatchRoomba
                 r = new Roomba();
             await r.Start();
         }
+
+        private void panelMap_Resize(object sender, EventArgs e)
+        {
+            map.Render(panelMap);
+        }
     }
 }
