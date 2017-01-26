@@ -1,4 +1,4 @@
-﻿import { Component, Input, OnChanges, SimpleChange, NgZone, HostListener } from '@angular/core';
+﻿import { Component, Input, OnChanges, SimpleChange, HostListener } from '@angular/core';
 import { Mission } from './Mission';
 import { MissionDetails } from './MissionDetails';
 import { RoombaService } from './roomba.service';
@@ -29,7 +29,7 @@ export class RoombaMapComponent implements OnChanges {
     //onResize(event:any) {
     //    this.RedrawMission();
     //}
-    constructor(private zone: NgZone,
+    constructor(
         private roombaService: RoombaService) {
         this.details = new MissionDetails()
         this.missionId = -1;
@@ -176,9 +176,7 @@ export class RoombaMapComponent implements OnChanges {
             if (this.missionId)
                 this.roombaService.getMissionDetails(this.missionId)
                     .subscribe(details => {
-                        this.zone.run(() => {
                             this.NewMissionDetails(details);
-                        })
                     },
                     error => this.errorMessage = <any>error);
         }

@@ -1,4 +1,4 @@
-import { Component,Input,NgZone } from '@angular/core';
+import { Component,Input } from '@angular/core';
 import { CurrentStatus } from './CurrentStatus';
 import { Mission } from './Mission';
 import { MissionDetails } from './MissionDetails';
@@ -77,8 +77,7 @@ export class AppComponent implements OnInit {
     errorMessage: string;
     name: string;
 
-    constructor(private zone: NgZone,
-                private roombaService: RoombaService) {
+    constructor(private roombaService: RoombaService) {
         this.roombaStatus = new CurrentStatus();
         this.roombaMissions = new Array<Mission>();
         this.errorMessage = "";
@@ -95,20 +94,16 @@ export class AppComponent implements OnInit {
         else if (error)
             this.errorMessage = error;
 
-        //setTimeout(this.refreshCurrentStatusTimeout, 10000);
+        setTimeout(() => { this.refreshCurrentStatusTimeout(); }, 10000);
     }
     refreshCurrentStatusTimeout()
     {
         this.roombaService.getCurrentStatus()
             .subscribe(status => {
-                this.zone.run(() => {
                     this.updateStatus(status);
-                })
             },
             error => {
-                this.zone.run(() => {
                     this.updateStatus(null,error);
-                })
             });
     }
 
@@ -118,9 +113,7 @@ export class AppComponent implements OnInit {
 
         this.roombaService.getMissions()
             .subscribe(missions => {
-                this.zone.run(() => {
                     this.roombaMissions = missions;
-                })
             },
             error => this.errorMessage = <any>error);
     }
