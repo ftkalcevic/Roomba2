@@ -1,4 +1,4 @@
-﻿import { Component, Input, OnChanges, SimpleChange, HostListener } from '@angular/core';
+﻿import { Component, Input, OnChanges, SimpleChange, HostListener, ElementRef } from '@angular/core';
 import { Mission } from './Mission';
 import { MissionDetails } from './MissionDetails';
 import { RoombaService } from './roomba.service';
@@ -18,10 +18,10 @@ export class RoombaMapComponent implements OnChanges {
     @Input() dOffsetY: number;
     @Input() bAccumulatePath: boolean;
     @Input() bThickLine: boolean;
-
+    numberOfPoints: number;
     details: MissionDetails;
     errorMessage: string;
-
+    pointsToShow: number;
     xpoints: number[];
     ypoints: number[];
 
@@ -29,12 +29,14 @@ export class RoombaMapComponent implements OnChanges {
     //onResize(event:any) {
     //    this.RedrawMission();
     //}
-    constructor(
+    constructor(private elref: ElementRef,
         private roombaService: RoombaService) {
         this.details = new MissionDetails()
         this.missionId = -1;
         this.bAccumulatePath = true;
         this.bThickLine = true;
+        this.numberOfPoints = 0;
+        this.pointsToShow = 0;
     }
 
     Scale( min1: number, max1: number, min2: number, max2: number): number[]
@@ -66,9 +68,16 @@ export class RoombaMapComponent implements OnChanges {
         ctx.scale(this.dScale, this.dScale);
 
         // Home
-        ctx.fillStyle = "orange";
+        ctx.fillStyle = "lime";
         ctx.beginPath();
-        ctx.arc(0, 0, 10, 0, 2 * Math.PI);  // Roomba seems to be about 20 units wide
+        ctx.moveTo(-15, 15);
+        ctx.lineTo(15, 15);
+        ctx.lineTo(15, -12);
+        ctx.lineTo(22, -12);
+        ctx.lineTo(0, -27);
+        ctx.lineTo(-22, -12);
+        ctx.lineTo(-15, -12);
+        ctx.lineTo(-15, 15);
         ctx.fill();
 
         if (this.bThickLine) {
@@ -93,7 +102,7 @@ export class RoombaMapComponent implements OnChanges {
 
         if (this.bAccumulatePath) {
             let bFirst: boolean = true;
-            for (let i = 1; i < this.xpoints.length; i++) {
+            for (let i = 1; i < this.pointsToShow; i++) {
                 ctx.beginPath();
                 ctx.moveTo(x, y);
                 x = this.xpoints[i];
@@ -105,7 +114,7 @@ export class RoombaMapComponent implements OnChanges {
         else {
             ctx.beginPath();
             ctx.moveTo(x, y);
-            for (let i = 1; i < this.xpoints.length; i++) {
+            for (let i = 1; i < this.pointsToShow; i++) {
                 x = this.xpoints[i];
                 y = this.ypoints[i];
                 ctx.lineTo(x, y);
@@ -113,11 +122,22 @@ export class RoombaMapComponent implements OnChanges {
             ctx.stroke();
         }
 
+        // Roomba
+        ctx.fillStyle = "red";
+        ctx.beginPath();
+        ctx.arc(x, y, 10, 0, 2 * Math.PI);  // Roomba seems to be about 20 units wide
+        ctx.fill();
+
         ctx.restore();
     }
 
     NewMissionDetails(details: MissionDetails) {
         this.details = details;
+
+        this.numberOfPoints = this.details.x.length;
+        this.pointsToShow = this.numberOfPoints;
+
+        document.getElementById('points').nodeValue = this.pointsToShow.toString();
 
         this.xpoints = new Array(this.details.x.length);
         this.ypoints = new Array(this.details.x.length);
@@ -191,4 +211,10 @@ export class RoombaMapComponent implements OnChanges {
         this.bAccumulatePath = bAccum;
         this.RedrawMission();
     }
+
+    onRangeChanged(points: number) {
+        this.pointsToShow = points;
+        this.RedrawMission();
+    }
+
 }

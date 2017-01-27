@@ -113,6 +113,7 @@
     <Build Include="Tables\CurrentStatus.sql" />
     <Build Include="Stored Procedures\GetCurrentStatus.sql" />
     <Build Include="Stored Procedures\UpdateCurrentStatus.sql" />
+    <Build Include="Stored Procedures\GetLiveMissionDetails.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Roomba2DB.publish.xml" />
