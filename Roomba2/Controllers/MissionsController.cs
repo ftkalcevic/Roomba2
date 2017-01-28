@@ -28,12 +28,12 @@ namespace Roomba2.Controllers
                     SqlDataReader rdr = cmd.ExecuteReader();
                     while ( rdr.Read())
                     {
-                        missions.Add(new Mission()
-                        {
-                            MissionId = rdr.GetInt32(rdr.GetOrdinal("MissionId")),
-                            StartTime = rdr.GetDateTime(rdr.GetOrdinal("StartTime")),
-                            EndTime = rdr.GetDateTime(rdr.GetOrdinal("EndTime"))
-                        });
+                        Mission m = new Mission();
+                        m.MissionId = rdr.GetInt32(rdr.GetOrdinal("MissionId"));
+                        m.StartTime = rdr.GetDateTime(rdr.GetOrdinal("StartTime"));
+                        if (!rdr.IsDBNull(rdr.GetOrdinal("EndTime")))
+                            m.EndTime = rdr.GetDateTime(rdr.GetOrdinal("EndTime"));
+                        missions.Add(m);
                     }
                 }
             }
@@ -51,12 +51,12 @@ namespace Roomba2.Controllers
                     SqlDataReader rdr = cmd.ExecuteReader();
                     if (rdr.Read())
                     {
-                        return Ok(new Mission()
-                        {
-                            MissionId = rdr.GetInt32(rdr.GetOrdinal("MissionId")),
-                            StartTime = rdr.GetDateTime(rdr.GetOrdinal("StartTime")),
-                            EndTime = rdr.GetDateTime(rdr.GetOrdinal("EndTime"))
-                        });
+                        Mission m = new Mission();
+                        m.MissionId = rdr.GetInt32(rdr.GetOrdinal("MissionId"));
+                        m.StartTime = rdr.GetDateTime(rdr.GetOrdinal("StartTime"));
+                        if ( !rdr.IsDBNull(rdr.GetOrdinal("EndTime")))
+                            m.EndTime = rdr.GetDateTime(rdr.GetOrdinal("EndTime"));
+                        return Ok(m);
                     }
                 }
             }

@@ -95,7 +95,7 @@ export class AppComponent implements OnInit {
         if ( index >= 0)
             this.selectedMission = this.roombaMissions[index];
         else
-            this.selectedMission = null;
+            this.selectedMission = { MissionId: -1, StartTime: null, EndTime: null };
     }
 
     locale(): string {
@@ -136,8 +136,10 @@ export class AppComponent implements OnInit {
         if (status) {
             this.roombaStatus = status;
 
-            if (!this.lastNextMissionCountDown || this.lastNextMissionCountDown != this.nextMissionCountDown)
-                this.nextMissionCountDown = status.NextMission;
+            if (!this.lastNextMissionCountDown || this.lastNextMissionCountDown != status.NextMission) {
+                this.lastNextMissionCountDown = this.nextMissionCountDown = status.NextMission;
+                
+            }
 
             // Date pipes not working on IE
             this.roombaStatus_LastUpdate = new Date(status.LastUpdate).toLocaleDateString(this.locale(), {

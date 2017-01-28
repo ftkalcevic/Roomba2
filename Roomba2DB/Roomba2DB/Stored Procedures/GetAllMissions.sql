@@ -2,4 +2,4 @@
 AS
 	SELECT	MissionId, StartTime, EndTime
 	from	dbo.Mission
-	order	by StartTime;
+	order	by StartTime desc;

@@ -22,7 +22,8 @@ namespace Roomba2.Controllers
             using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings[RoombaDBName].ConnectionString))
             {
                 con.Open();
-                using (SqlCommand cmd = new SqlCommand("GetLiveMissionDetails_Test", con))
+                using (SqlCommand cmd = new SqlCommand("GetLiveMissionDetails", con))
+                //using (SqlCommand cmd = new SqlCommand("GetLiveMissionDetails_Test", con))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.Add("@LastTick", SqlDbType.Int).Value = id;

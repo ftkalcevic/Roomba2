@@ -12,9 +12,15 @@
            #points 
            min="0" 
            max="{{numberOfPoints}}" 
-           (change)="onRangeChanged(points.value);">
-    <canvas id="canvasMap"
-            width="2170"
-            height="1357"
-            style="width:100%; height:100%; background-image:url('/img/floorplan.png'); background-size:cover;"></canvas>
+           (change)="onRangeChanged(points.value);"/>
+    <div style="position:relative; width=100%;">
+        <canvas id="canvasMap"
+                width="2170"
+                height="1357"
+                style="position:absolute; left:0; top:0; width: 100%; z-index: 0; background-image:url('/img/floorplan.png'); background-size:cover;"></canvas>
+        <canvas id="canvasAnimation"
+                width="2170"
+                height="1357"
+                style="position:absolute; left:0; top:0;width: 100%; z-index: 1;"></canvas>
+    </div>
 </span>

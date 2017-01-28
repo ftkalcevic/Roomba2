@@ -12,7 +12,7 @@
         [(ngModel)]="selectedMissionId"
         (change)="onSelect(missionlist.value)" 
         [class.selected]="mission===selectedMission" >
-    <option value="-1"></option>
+    <option value="-1">Live Mission</option>
     <option *ngFor="let mission of roombaMissions; let i=index;" value="{{i}}">
         {{mission.StartTime|date:'EEE d MMM y'}}
     </option>

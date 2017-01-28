@@ -30,12 +30,11 @@ namespace Roomba2.Controllers
                     SqlDataReader rdr = cmd.ExecuteReader();
                     if (rdr.Read())
                     {
-                        mission = new Mission()
-                        {
-                            MissionId = rdr.GetInt32(rdr.GetOrdinal("MissionId")),
-                            StartTime = rdr.GetDateTime(rdr.GetOrdinal("StartTime")),
-                            EndTime = rdr.GetDateTime(rdr.GetOrdinal("EndTime"))
-                        };
+                        mission = new Mission();
+                        mission.MissionId = rdr.GetInt32(rdr.GetOrdinal("MissionId"));
+                        mission.StartTime = rdr.GetDateTime(rdr.GetOrdinal("StartTime"));
+                        if (!rdr.IsDBNull(rdr.GetOrdinal("EndTime")))
+                            mission.EndTime = rdr.GetDateTime(rdr.GetOrdinal("EndTime"));
                     }
                     rdr.Close();
                 }
