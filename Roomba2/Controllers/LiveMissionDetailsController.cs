@@ -33,7 +33,7 @@ namespace Roomba2.Controllers
                         return NotFound();
 
                     int LastTick = rdr.GetInt32(rdr.GetOrdinal("LastTick"));
-                    int MissionId = rdr.GetInt32(rdr.GetOrdinal("MissionId"));
+                    int MissionNumber = rdr.GetInt32(rdr.GetOrdinal("MissionNumber"));
                     DateTime StartTime = rdr.GetDateTime(rdr.GetOrdinal("StartTime"));
 
                     if (!rdr.NextResult())
@@ -53,7 +53,7 @@ namespace Roomba2.Controllers
 
                     LiveMissionDetails md = new LiveMissionDetails();
                     md.StartTime = StartTime;
-                    md.MissionId = MissionId;
+                    md.MissionNumber = MissionNumber;
                     md.LastTick = LastTick;
                     md.x = x.ToArray();
                     md.y = y.ToArray();

@@ -104,8 +104,6 @@
   <ItemGroup>
     <Build Include="Tables\Position.sql" />
     <Build Include="Tables\Mission.sql" />
-    <Build Include="Stored Procedures\EndMission.sql" />
-    <Build Include="Stored Procedures\NewMission.sql" />
     <Build Include="Stored Procedures\NewPosition.sql" />
     <Build Include="Stored Procedures\GetAllMissions.sql" />
     <Build Include="Stored Procedures\GetMission.sql" />
@@ -114,8 +112,15 @@
     <Build Include="Stored Procedures\GetCurrentStatus.sql" />
     <Build Include="Stored Procedures\UpdateCurrentStatus.sql" />
     <Build Include="Stored Procedures\GetLiveMissionDetails.sql" />
+    <Build Include="Stored Procedures\UpdateProperty.sql" />
+    <Build Include="Tables\Properties.sql" />
+    <Build Include="PropertiesTableType.sql" />
+    <Build Include="Stored Procedures\UpdateMissionStatus.sql" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Roomba2DB.publish.xml" />
+    <None Include="Roomba2.publish.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="Roomba2DB.refactorlog" />
   </ItemGroup>
 </Project>

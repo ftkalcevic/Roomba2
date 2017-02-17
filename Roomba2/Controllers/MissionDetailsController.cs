@@ -26,15 +26,19 @@ namespace Roomba2.Controllers
                 using (SqlCommand cmd = new SqlCommand("GetMission", con))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.Add("@MissionId", SqlDbType.Int).Value = id;
+                    cmd.Parameters.Add("@MissionNumber", SqlDbType.Int).Value = id;
                     SqlDataReader rdr = cmd.ExecuteReader();
                     if (rdr.Read())
                     {
                         mission = new Mission();
-                        mission.MissionId = rdr.GetInt32(rdr.GetOrdinal("MissionId"));
+                        mission.MissionNumber = rdr.GetInt32(rdr.GetOrdinal("MissionNumber"));
                         mission.StartTime = rdr.GetDateTime(rdr.GetOrdinal("StartTime"));
-                        if (!rdr.IsDBNull(rdr.GetOrdinal("EndTime")))
-                            mission.EndTime = rdr.GetDateTime(rdr.GetOrdinal("EndTime"));
+                        mission.EndTime = rdr.GetDateTime(rdr.GetOrdinal("LastUpdate"));
+                        mission.Cycle = rdr.GetString(rdr.GetOrdinal("Cycle"));
+                        mission.Phase = rdr.GetString(rdr.GetOrdinal("Phase"));
+                        mission.Initiator = rdr.GetString(rdr.GetOrdinal("Initiator"));
+                        mission.Error = rdr.GetInt32(rdr.GetOrdinal("Error"));
+                        mission.BatteryPercent = rdr.GetInt32(rdr.GetOrdinal("BatteryPercent"));
                     }
                     rdr.Close();
                 }
@@ -43,7 +47,7 @@ namespace Roomba2.Controllers
                     using (SqlCommand cmd = new SqlCommand("GetMissionDetails", con))
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Parameters.Add("@MissionId", SqlDbType.Int).Value = id;
+                        cmd.Parameters.Add("@MissionNumber", SqlDbType.Int).Value = id;
                         SqlDataReader rdr = cmd.ExecuteReader();
 
                         List<int> x = new List<int>();
@@ -61,7 +65,7 @@ namespace Roomba2.Controllers
                         MissionDetails md = new MissionDetails();
                         md.StartTime = mission.StartTime;
                         md.EndTime = mission.EndTime;
-                        md.MissionId = mission.MissionId;
+                        md.MissionNumber = mission.MissionNumber;
                         md.x = x.ToArray();
                         md.y = y.ToArray();
                         md.theta = theta.ToArray();

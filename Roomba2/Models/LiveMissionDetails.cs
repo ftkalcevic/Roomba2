@@ -8,7 +8,7 @@ namespace Roomba2.Models
    
     public class LiveMissionDetails
     {
-        public int MissionId { get; set; }
+        public int MissionNumber { get; set; }
         public DateTime StartTime { get; set; }
         public int LastTick { get; set; }
         public int[] x { get; set; }

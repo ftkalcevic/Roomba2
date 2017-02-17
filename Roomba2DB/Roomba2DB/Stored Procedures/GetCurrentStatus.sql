@@ -1,4 +1,4 @@
 ﻿CREATE PROCEDURE [dbo].[GetCurrentStatus]
 AS
-	SELECT	LastUpdate, Status, NextMission, RoombaTime, Flags, BatteryPercentage, Error, NotReady
+	SELECT	LastUpdate, Status, NextMission, BatteryPercent
 	from	dbo.CurrentStatus;

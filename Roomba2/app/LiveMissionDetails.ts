@@ -1,5 +1,5 @@
 ﻿export class LiveMissionDetails {
-    MissionId: number;
+    MissionNumber: number;
     StartTime: Date;
     LastTick: number;
     x: number [];

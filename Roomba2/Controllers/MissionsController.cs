@@ -29,10 +29,14 @@ namespace Roomba2.Controllers
                     while ( rdr.Read())
                     {
                         Mission m = new Mission();
-                        m.MissionId = rdr.GetInt32(rdr.GetOrdinal("MissionId"));
+                        m.MissionNumber = rdr.GetInt32(rdr.GetOrdinal("MissionNumber"));
                         m.StartTime = rdr.GetDateTime(rdr.GetOrdinal("StartTime"));
-                        if (!rdr.IsDBNull(rdr.GetOrdinal("EndTime")))
-                            m.EndTime = rdr.GetDateTime(rdr.GetOrdinal("EndTime"));
+                        m.EndTime = rdr.GetDateTime(rdr.GetOrdinal("LastUpdate"));
+                        m.Cycle = rdr.GetString(rdr.GetOrdinal("Cycle"));
+                        m.Phase = rdr.GetString(rdr.GetOrdinal("Phase"));
+                        m.Initiator = rdr.GetString(rdr.GetOrdinal("Initiator"));
+                        m.BatteryPercent = rdr.GetInt32(rdr.GetOrdinal("BatteryPercent"));
+                        m.Error = rdr.GetInt32(rdr.GetOrdinal("Error"));
                         missions.Add(m);
                     }
                 }
@@ -47,15 +51,19 @@ namespace Roomba2.Controllers
                 using (SqlCommand cmd = new SqlCommand("GetMission", con))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.Add("@MissionId", SqlDbType.Int).Value = id;
+                    cmd.Parameters.Add("@MissionNumber", SqlDbType.Int).Value = id;
                     SqlDataReader rdr = cmd.ExecuteReader();
                     if (rdr.Read())
                     {
                         Mission m = new Mission();
-                        m.MissionId = rdr.GetInt32(rdr.GetOrdinal("MissionId"));
+                        m.MissionNumber = rdr.GetInt32(rdr.GetOrdinal("MissionNumber"));
                         m.StartTime = rdr.GetDateTime(rdr.GetOrdinal("StartTime"));
-                        if ( !rdr.IsDBNull(rdr.GetOrdinal("EndTime")))
-                            m.EndTime = rdr.GetDateTime(rdr.GetOrdinal("EndTime"));
+                        m.EndTime = rdr.GetDateTime(rdr.GetOrdinal("LastUpdate"));
+                        m.Cycle = rdr.GetString(rdr.GetOrdinal("Cycle"));
+                        m.Phase = rdr.GetString(rdr.GetOrdinal("Phase"));
+                        m.Initiator = rdr.GetString(rdr.GetOrdinal("Initiator"));
+                        m.Error = rdr.GetInt32(rdr.GetOrdinal("Error"));
+                        m.BatteryPercent = rdr.GetInt32(rdr.GetOrdinal("BatteryPercent"));
                         return Ok(m);
                     }
                 }

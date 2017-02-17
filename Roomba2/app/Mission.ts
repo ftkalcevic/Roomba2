@@ -1,5 +1,11 @@
 ﻿export class Mission {
-    MissionId: number;
+    MissionNumber: number;
     StartTime: Date;
     EndTime: Date;
+    Cycle: string;
+    Phase: string;
+    Initiator: string;
+    BatteryPercent: number;
+    Error: number;
+
 }

@@ -32,11 +32,7 @@ namespace Roomba2.Controllers
                             LastUpdate = rdr.GetDateTime(rdr.GetOrdinal("LastUpdate")),
                             Status = rdr.GetString(rdr.GetOrdinal("Status")),
                             NextMission = rdr.GetInt32(rdr.GetOrdinal("NextMission")),
-                            RoombaTime = rdr.GetDateTime(rdr.GetOrdinal("RoombaTime")),
-                            Flags = rdr.GetInt32(rdr.GetOrdinal("Flags")),
-                            BatteryPercentage= rdr.GetInt32(rdr.GetOrdinal("BatteryPercentage")),
-                            Error= rdr.GetInt32(rdr.GetOrdinal("Error")),
-                            NotReady= rdr.GetInt32(rdr.GetOrdinal("NotReady"))
+                            BatteryPercent= rdr.GetInt32(rdr.GetOrdinal("BatteryPercent"))
                         });
                     }
                 }

@@ -179,7 +179,7 @@ namespace WatchRoomba
 
             try
             {
-                HttpResponseMessage response = await client.PostAsJsonAsync("umi", r);
+              //  HttpResponseMessage response = await client.PostAsJsonAsync("umi", r);
 
                 response.EnsureSuccessStatusCode();
 

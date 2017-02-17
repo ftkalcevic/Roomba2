@@ -1,6 +1,6 @@
 ﻿CREATE PROCEDURE [dbo].[GetMission]
-	@MissionId INT
+	@MissionNumber INT
 AS
-	SELECT	MissionId, StartTime, EndTime
+	SELECT	MissionNumber, StartTime, LastUpdate, Cycle, Phase, Initiator, Error, BatteryPercent
 	from	dbo.Mission
-	where	MissionId = @MissionId;
+	where	MissionNumber = @MissionNumber;

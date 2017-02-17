@@ -1,6 +1,6 @@
 ﻿
 CREATE PROCEDURE [dbo].[NewPosition]
-	@MissionId INT,
+	@MissionNumber INT,
 	@Tick INT,
 	@x INT,
 	@y INT,
@@ -8,6 +8,6 @@ CREATE PROCEDURE [dbo].[NewPosition]
 	@battery INT
 AS
 	INSERT INTO dbo.Position
-		(MissionId,Tick,x,y,theta,battery)
+		(MissionNumber,Tick,x,y,theta,battery)
 	values
-		(@MissionId,@Tick,@x,@y,@theta,@battery)
+		(@MissionNumber,@Tick,@x,@y,@theta,@battery)

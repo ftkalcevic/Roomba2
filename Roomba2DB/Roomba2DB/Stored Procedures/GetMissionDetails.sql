@@ -1,7 +1,7 @@
 ﻿CREATE PROCEDURE [dbo].[GetMissionDetails]
-	@MissionId INT
+	@MissionNumber INT
 AS
 	SELECT	x, y, theta, battery
 	from	dbo.Position
-	where	MissionId = @MissionId
+	where	MissionNumber = @MissionNumber
 	order by Tick;

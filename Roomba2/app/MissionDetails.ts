@@ -1,5 +1,5 @@
 ﻿export class MissionDetails {
-    MissionId: number;
+    MissionNumber: number;
     StartTime: Date;
     EndTime: Date;
     x: number [];

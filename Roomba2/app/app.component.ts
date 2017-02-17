@@ -95,7 +95,7 @@ export class AppComponent implements OnInit {
         if ( index >= 0)
             this.selectedMission = this.roombaMissions[index];
         else
-            this.selectedMission = { MissionId: -1, StartTime: null, EndTime: null };
+            this.selectedMission = { MissionNumber: -1, StartTime: null, EndTime: null, Cycle:"", Phase:"",Initiator:"",BatteryPercent:0,Error:0 };
     }
 
     locale(): string {
@@ -149,10 +149,6 @@ export class AppComponent implements OnInit {
                 hour: '2-digit',
                 minute: '2-digit',
                 second: '2-digit'
-            });
-            this.roombaStatus_RoombaTime = new Date(status.RoombaTime).toLocaleTimeString(this.locale(), {
-                hour: '2-digit',
-                minute: '2-digit'
             });
         }
         else if (error)

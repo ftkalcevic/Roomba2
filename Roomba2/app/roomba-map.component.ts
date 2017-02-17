@@ -12,7 +12,7 @@ import './rxjs-operators';
     providers: [RoombaService]
 })
 export class RoombaMapComponent implements OnChanges {
-    @Input() missionId: number;
+    @Input() missionNumber: number;
     @Input() dScale: number;
     @Input() dRotate: number;
     @Input() dOffsetX: number;
@@ -42,7 +42,7 @@ export class RoombaMapComponent implements OnChanges {
     constructor(private elref: ElementRef,
         private roombaService: RoombaService) {
         this.details = new MissionDetails()
-        this.missionId = -1;
+        this.missionNumber = -1;
         this.bAccumulatePath = true;
         this.bThickLine = true;
         this.numberOfPoints = 0;
@@ -79,9 +79,9 @@ export class RoombaMapComponent implements OnChanges {
         }
         ctx.save();
 
-        ctx.rotate(this.dRotate * Math.PI / 180);
         ctx.translate(this.dOffsetX, this.dOffsetY);
-        ctx.scale(this.dScale, this.dScale);
+        ctx.scale(this.dScale, -this.dScale);
+        ctx.rotate(this.dRotate * Math.PI / 180);
 
         // Home
         if (bDrawHome) {
@@ -276,12 +276,12 @@ export class RoombaMapComponent implements OnChanges {
     }
 
     ngOnChanges(changes: { [propName: string]: SimpleChange }) {
-        if (changes["missionId"]) {
+        if (changes["missionNumber"]) {
 
-            this.missionId = changes["missionId"].currentValue;
-            if (this.missionId) {
+            this.missionNumber = changes["missionNumber"].currentValue;
+            if (this.missionNumber) {
 
-                if (this.missionId == -1) {
+                if (this.missionNumber == -1) {
                     this.lastTick = 0;
                     this.roombaService.getLiveMissionDetails(this.lastTick)
                         .subscribe(details => {
@@ -290,7 +290,7 @@ export class RoombaMapComponent implements OnChanges {
                         error => this.errorMessage = <any>error);
                 }
                 else {
-                    this.roombaService.getMissionDetails(this.missionId)
+                    this.roombaService.getMissionDetails(this.missionNumber)
                         .subscribe(details => {
                                 this.NewMissionDetails(details);
                         },

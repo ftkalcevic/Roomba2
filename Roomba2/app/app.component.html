@@ -2,14 +2,14 @@
 <span>
     <table class="missions" style="width:100%;">
         <tr><th>Last Update</th><th>Status</th><th>Next Mission</th><th>Roomba Time</th></tr>
-        <tr><td>{{roombaStatus_LastUpdate}}</td><td>{{roombaStatus.Status}}</td><td>{{roombaStatus_NextMission}}</td><td>{{roombaStatus_RoombaTime}}</td></tr>
+        <tr><td>{{roombaStatus_LastUpdate}}</td><td>{{roombaStatus.Status}}</td><td>{{roombaStatus_NextMission}}</td></tr>
     </table>
 </span>
 
 <span>Number of Missions: {{roombaMissions.length}}</span>
 
 <select #missionlist 
-        [(ngModel)]="selectedMissionId"
+        [(ngModel)]="selectedMissionNumber"
         (change)="onSelect(missionlist.value)" 
         [class.selected]="mission===selectedMission" >
     <option value="-1">Live Mission</option>
@@ -18,9 +18,9 @@
     </option>
 </select>
 
-<roomba-map *ngIf="selectedMission" [missionId]="selectedMission.MissionId"
+<roomba-map *ngIf="selectedMission" [missionNumber]="selectedMission.MissionNumber"
             dScale="1.65"
-            dRotate="0.0"
+            dRotate="180"
             dOffsetX="875"
             dOffsetY="375"
             bShowCleaning="true"

@@ -4,32 +4,31 @@
 CREATE PROCEDURE [dbo].[GetLiveMissionDetails]
 	@LastTick int
 AS
-	DECLARE @MissionId INT;
+	DECLARE @MissionNumber INT;
 	DECLARE @Tick INT;
 	declare @StartTime DATETIME;
 	
-	select	@MissionId=MissionId, @StartTime=StartTime
+	select	@MissionNumber=MissionNumber, @StartTime=StartTime
 	from	Mission
-	where	MissionId= (select	MAX(MissionId)
-						from	Mission
-						where	EndTime is NULL);
+	where	MissionNumber= (select	MAX(MissionNumber)
+							from	Mission);
 
-	if @MissionId is NULL
+	if @MissionNumber is NULL
 	BEGIN
-			SELECT	@MissionId MissionId, @Tick LastTick, @StartTime StartTime;
+			SELECT	@MissionNumber MissionNumber, @Tick LastTick, @StartTime StartTime;
 	END
 	ELSE
 	BEGIN
 
 		SELECT	@Tick = MAX(Tick)
 		FROM	dbo.Position
-		WHERE	MissionId = @MissionId;
+		WHERE	MissionNumber = @MissionNumber;
 
-		SELECT	@MissionId MissionId, @Tick LastTick, @StartTime StartTime;
+		SELECT	@MissionNumber MissionNumber, @Tick LastTick, @StartTime StartTime;
 
 		SELECT	x, y, theta, battery
 		from	dbo.Position
-		where	MissionId = @MissionId
+		where	MissionNumber = @MissionNumber
 			AND Tick > @LastTick 
 			AND Tick <= @Tick
 		order by Tick;
