@@ -26,6 +26,7 @@ export class RoombaMapComponent implements OnChanges {
     pointsToShow: number;
     xpoints: number[];
     ypoints: number[];
+    thetas: number[];
     lastTick: number;
     lastAnimationEndFrame: number;
     animationStart: number;
@@ -142,12 +143,23 @@ export class RoombaMapComponent implements OnChanges {
 
         // Roomba
         if (bDrawRoomba) {
-            ctx.fillStyle = "red";
-            ctx.beginPath();
-            ctx.arc(x, y, 10, 0, 2 * Math.PI);  // Roomba seems to be about 20 units wide
-            ctx.fill();
+            let theta: number = this.thetas[to];
+            this.DrawRoomba(ctx, x, y, theta);
         }
 
+        ctx.restore();
+    }
+
+    DrawRoomba(ctx: CanvasRenderingContext2D, x: number, y: number, theta: number) {
+        let rsize: number = 40;
+
+        //console.log("x:" + x.toString() + ", y:" + y.toString() + ", theta:" + theta.toString());
+
+        ctx.save();
+        ctx.translate(x, y);
+        ctx.rotate((theta + 90) * Math.PI / 180);
+        let image: HTMLImageElement = <HTMLImageElement>document.getElementById('imgRoomba');
+        ctx.drawImage(image, -rsize / 2, -rsize / 2, rsize, rsize);
         ctx.restore();
     }
 
@@ -164,6 +176,9 @@ export class RoombaMapComponent implements OnChanges {
         }
 
        // console.log("from:" + this.animationStartFrame.toString() + ", to:" + endFrame.toString());
+        if (endFrame > this.xpoints.length-1)
+            endFrame = this.xpoints.length-1;
+
         {
 
             let canvas: HTMLCanvasElement = <HTMLCanvasElement>document.getElementById("canvasAnimation");
@@ -196,20 +211,31 @@ export class RoombaMapComponent implements OnChanges {
             let percent: number = endFrame - frame;
             let x: number = this.xpoints[frame];
             let y: number = this.ypoints[frame];
+            let theta: number = this.thetas[frame];
 
-            let x1: number = x + (this.xpoints[frame+1] - x)*percent;
-            let y1: number = y + (this.ypoints[frame+1] - y)*percent;
-            console.log("percent:" + percent.toString() + ", x1:" + x1.toString() + ", y1:" + y1.toString());
+            let frame2: number = frame == this.xpoints.length-1 ? frame : frame+1;
+            let x2: number = this.xpoints[frame2];
+            let y2: number = this.ypoints[frame2];
+            let theta2: number = this.thetas[frame2];
+
+            let dtheta2: number = theta2 - theta;
+            dtheta2 += (dtheta2 > 180) ? -360 : (dtheta2 < -180) ? 360 : 0;
+
+            let x1: number = x + (x2 - x)*percent;
+            let y1: number = y + (y2 - y)*percent;
+            let theta1: number = theta + (dtheta2)*percent;
+            //console.log("theta:" + theta.toString() + ", theta2:" + theta2.toString() + ", dtheta2:" + dtheta2.toString() + ", theta1:" + theta1.toString());
+
+            if (isNaN(theta1) )
+                theta1 = 0;
+
             ctx.beginPath();
             ctx.moveTo(x, y);
             ctx.lineTo(x1, y1);
             ctx.stroke();
                 
             // Roomba
-            ctx.fillStyle = "red";
-            ctx.beginPath();
-            ctx.arc(x1, y1, 10, 0, 2 * Math.PI);  // roomba seems to be about 20 units wide
-            ctx.fill();
+            this.DrawRoomba(ctx, x1, y1, theta1);
 
             ctx.restore();
         }
@@ -229,14 +255,14 @@ export class RoombaMapComponent implements OnChanges {
     UpdateLiveMissionDetails(details: LiveMissionDetails) {
         if (this.lastTick == 0) {
             if (details.LastTick > 0) {
-                this.InitDetails(details.x, details.y);
+                this.InitDetails(details.x, details.y, details.theta);
                 this.lastTick = details.LastTick;
                 this.RedrawMission();
             }
         }
         else if (this.lastTick != details.LastTick) {
             let from: number = this.xpoints.length;
-            this.AppendDetails(details.x, details.y);
+            this.AppendDetails(details.x, details.y, details.theta);
             this.lastTick = details.LastTick;
             this.AnimateMission(from, this.xpoints.length-1);
             //this.RedrawMission();
@@ -250,15 +276,16 @@ export class RoombaMapComponent implements OnChanges {
         }, this.dLiveRefreshPeriod);
     }
 
-    InitDetails(x: number[], y: number[] ) {
+    InitDetails(x: number[], y: number[], theta: number[] ) {
         this.numberOfPoints = x.length;
         this.pointsToShow = this.numberOfPoints;
         //document.getElementById('points').nodeValue = this.pointsToShow.toString();
 
         this.xpoints = x;
         this.ypoints = y;
+        this.thetas = theta;
     }
-    AppendDetails(x: number[], y: number[]) {
+    AppendDetails(x: number[], y: number[], theta: number[]) {
 
         this.numberOfPoints += x.length;
         this.pointsToShow += x.length;
@@ -266,11 +293,12 @@ export class RoombaMapComponent implements OnChanges {
 
         this.xpoints = this.xpoints.concat( x );
         this.ypoints = this.ypoints.concat( y );
+        this.thetas = this.thetas.concat(theta);
     }
     NewMissionDetails(details: MissionDetails) {
         this.details = details;
 
-        this.InitDetails( details.x, details.y )
+        this.InitDetails( details.x, details.y, details.theta )
 
         this.RedrawMission();
     }
