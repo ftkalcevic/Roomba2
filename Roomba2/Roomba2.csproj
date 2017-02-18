@@ -103,7 +103,6 @@
     <Content Include="img\floorplan.png" />
     <Content Include="img\Roomba.jpg" />
     <Content Include="index.html" />
-    <Content Include="Roomba.htm" />
     <Content Include="styles.css" />
     <Content Include="systemjs.config.js" />
     <Content Include="Web.config" />

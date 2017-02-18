@@ -171,9 +171,9 @@ export class RoombaMapComponent implements OnChanges {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             ctx.save();
 
-            ctx.rotate(this.dRotate * Math.PI / 180);
             ctx.translate(this.dOffsetX, this.dOffsetY);
-            ctx.scale(this.dScale, this.dScale);
+            ctx.scale(this.dScale, -this.dScale);
+            ctx.rotate(this.dRotate * Math.PI / 180);
 
             if (this.bThickLine) {
                 ctx.lineCap = "round";
@@ -199,7 +199,7 @@ export class RoombaMapComponent implements OnChanges {
 
             let x1: number = x + (this.xpoints[frame+1] - x)*percent;
             let y1: number = y + (this.ypoints[frame+1] - y)*percent;
-
+            console.log("percent:" + percent.toString() + ", x1:" + x1.toString() + ", y1:" + y1.toString());
             ctx.beginPath();
             ctx.moveTo(x, y);
             ctx.lineTo(x1, y1);

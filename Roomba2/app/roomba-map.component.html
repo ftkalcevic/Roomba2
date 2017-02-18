@@ -12,7 +12,8 @@
            #points 
            min="0" 
            max="{{numberOfPoints}}" 
-           (change)="onRangeChanged(points.value);"/>
+           (change)="onRangeChanged(points.value);"
+           (input)="onRangeChanged(points.value);"/>
     <div style="position:relative; width=100%;">
         <canvas id="canvasMap"
                 width="2170"
