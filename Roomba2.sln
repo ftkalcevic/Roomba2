@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Roomba2", "Roomba2\Roomba2.
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Roomba2DB", "Roomba2DB\Roomba2DB\Roomba2DB.sqlproj", "{7DDC1866-9ADA-44E5-85A1-98613ACD585D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WatchRoomba", "WatchRoomba\WatchRoomba.csproj", "{3D599450-933B-40EB-B0EC-A9B59A8733BF}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WatchRoomba2", "WatchRoomba2\WatchRoomba2.csproj", "{E32EBE9E-3B96-44F7-AD70-5727071D59CD}"
 EndProject
 Global
@@ -27,8 +25,6 @@ Global
 		{7DDC1866-9ADA-44E5-85A1-98613ACD585D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7DDC1866-9ADA-44E5-85A1-98613ACD585D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7DDC1866-9ADA-44E5-85A1-98613ACD585D}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{3D599450-933B-40EB-B0EC-A9B59A8733BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3D599450-933B-40EB-B0EC-A9B59A8733BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E32EBE9E-3B96-44F7-AD70-5727071D59CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E32EBE9E-3B96-44F7-AD70-5727071D59CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E32EBE9E-3B96-44F7-AD70-5727071D59CD}.Release|Any CPU.ActiveCfg = Release|Any CPU

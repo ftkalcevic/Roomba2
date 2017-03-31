@@ -43,7 +43,9 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
+    <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Core" />
+    <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -56,6 +58,16 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Roomba980mqqt.cs" />
     <Compile Include="RoombaDB.cs" />
+    <Compile Include="WatchRoomba2ServiceInstaller.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="WatchRoomba2.cs" />
+    <Compile Include="WatchRoomba2Service.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="WatchRoomba2Service.Designer.cs">
+      <DependentUpon>WatchRoomba2Service.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

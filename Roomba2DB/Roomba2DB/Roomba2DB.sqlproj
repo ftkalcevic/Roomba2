@@ -119,8 +119,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Roomba2.publish.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <RefactorLog Include="Roomba2DB.refactorlog" />
+    <None Include="Roomba2DB-winhost.publish.xml" />
   </ItemGroup>
 </Project>
